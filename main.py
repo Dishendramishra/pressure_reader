@@ -23,8 +23,7 @@ x, y = [], []
 # =====================================================
 #           serial communication
 # =====================================================
-# comment line 25-27 for identifying your hw id
-# then comment line 24 and uncomment 25-27
+# comment line 31-33 and uncomment line 30 for identifying your hw id
 ports = serial.tools.list_ports.comports()
 target_port = None
 for port, desc, hwid in sorted(ports):
@@ -33,6 +32,10 @@ for port, desc, hwid in sorted(ports):
         print(port)
         target_port = port
 # =====================================================
+
+if not target_port:
+    print("No COM Port Found! :(")
+    quit()
 
 ser = serial.Serial(target_port, 9600)
 file = open("data.csv","w",newline='')
@@ -63,6 +66,7 @@ while True:
 
         file_writer.writerow([aux2, time, date])
         sleep(0.9)
+        file.flush()
 
     except:
         file.flush()
